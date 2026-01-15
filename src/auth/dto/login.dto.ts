@@ -1,11 +1,10 @@
-import { IsEmail, IsString, MinLength, MaxLength } from 'class-validator';
+import { IsEmail, IsString, MinLength } from 'class-validator';
 
 export class LoginDto {
-  @IsEmail()
+  @IsEmail({}, { message: 'Debe ingresar un correo válido' })
   email: string;
 
   @IsString()
-  @MinLength(6)
-  @MaxLength(50)
-  password: string;
+  @MinLength(1, { message: 'La contraseña es obligatoria' })
+  contrasenia: string;
 }

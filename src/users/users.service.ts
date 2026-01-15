@@ -8,7 +8,7 @@ export class UsersService {
   private idCounter = 1;
 
   // Crear nuevo usuario
-  create(userData: Omit<User, 'id' | 'createdAt'>): User {
+  create(userData: { email: string; contrasenia: any; nombre: string }): User {
     const newUser: User = {
       id: this.idCounter++,
       ...userData,
@@ -20,9 +20,7 @@ export class UsersService {
 
   // Buscar usuario por email
   findByEmail(email: string): User | undefined {
-    return this.users.find(
-      (user) => user.email.toLowerCase() === email.toLowerCase(),
-    );
+    return this.users.find((user) => user.email === email);
   }
 
   // Buscar usuario por ID
@@ -32,8 +30,6 @@ export class UsersService {
 
   // Obtener todos los usuarios (sin contraseñas)
   findAll(): Omit<User, 'contrasenia'>[] {
-    return this.users.map(
-      ({ contrasenia, ...userWithoutPassword }) => userWithoutPassword,
-    );
+    return this.users.map(({ contrasenia, ...rest }) => rest);
   }
 }
