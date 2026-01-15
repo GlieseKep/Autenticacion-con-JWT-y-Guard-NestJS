@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  // Simulamos base de datos con un array
+  private users: User[] = [];
+  private idCounter = 1;
+
+  // Crear nuevo usuario
+  create(userData: Omit<User, 'id' | 'createdAt'>): User {
+    const newUser: User = {
+      id: this.idCounter++,
+      ...userData,
+      fechaRegistro: new Date(),
+    };
+    this.users.push(newUser);
+    return newUser;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  // Buscar usuario por email
+  findByEmail(email: string): User | undefined {
+    return this.users.find(
+      (user) => user.email.toLowerCase() === email.toLowerCase(),
+    );
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  // Buscar usuario por ID
+  findById(id: number): User | undefined {
+    return this.users.find((user) => user.id === id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  // Obtener todos los usuarios (sin contraseñas)
+  findAll(): Omit<User, 'contrasenia'>[] {
+    return this.users.map(
+      ({ contrasenia, ...userWithoutPassword }) => userWithoutPassword,
+    );
   }
 }
