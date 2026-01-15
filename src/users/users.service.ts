@@ -8,7 +8,7 @@ export class UsersService {
   private idCounter = 1;
 
   // Crear nuevo usuario
-  create(userData: { email: string; contrasenia: any; nombre: string }): User {
+  create(userData: Omit<User, 'id' | 'fechaRegistro'>): User {
     const newUser: User = {
       id: this.idCounter++,
       ...userData,
@@ -31,5 +31,17 @@ export class UsersService {
   // Obtener todos los usuarios (sin contraseñas)
   findAll(): Omit<User, 'contrasenia'>[] {
     return this.users.map(({ contrasenia, ...rest }) => rest);
+  }
+
+  findOne(id: number) {
+    return 'Method to retrieve';
+  }
+
+  update(id: number, data: Partial<User>) {
+    return 'Method for updating user.';
+  }
+
+  remove(id: number) {
+    return 'Method to remove user.';
   }
 }
