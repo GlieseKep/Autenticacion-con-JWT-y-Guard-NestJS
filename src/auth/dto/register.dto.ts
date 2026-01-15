@@ -7,10 +7,10 @@ export class RegisterDto {
   @IsString()
   @MinLength(6)
   @MaxLength(50)
-  password: string;
+  contrasenia: string;
 
   @IsString()
   @MinLength(2)
   @MaxLength(50)
-  name: string;
+  nombre: string;
 }
