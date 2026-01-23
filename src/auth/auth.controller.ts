@@ -44,10 +44,7 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req) {
     // req.user viene del JwtStrategy.validate()
-    return {
-      message: 'Perfil obtenido exitosamente',
-      user: req.user,
-    };
+    return req.user;
   }
 
   /**
